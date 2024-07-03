@@ -1,9 +1,12 @@
 const express = require("express");
+const cors = require("cors");
 const bodyParser = require("body-parser");
 const { getUsers } = require("./api/get/getUsers");
 const { getBooks } = require("./api/get/getBooks");
+const { addBook } = require("./api/post/addBook");
 
 const app = express();
+app.use(cors());
 const port = 3001;
 
 // Middleware
@@ -20,7 +23,7 @@ app.get("/api/users", async (req, res) => {
   }
 });
 
-// Örnek GET endpoint: Tüm kitapları getir
+// GET endpoint: Tüm kitapları getir
 app.get("/api/books", async (req, res) => {
   try {
     const books = await getBooks();
@@ -28,6 +31,19 @@ app.get("/api/books", async (req, res) => {
   } catch (err) {
     console.error("Error retrieving books", err);
     res.status(500).json({ error: "Error retrieving books" });
+  }
+});
+
+// POST endpoint: Yeni bir kitap ekle
+app.post("/api/books", async (req, res) => {
+  const { bookname, writername, bookphoto } = req.body;
+
+  try {
+    const newBook = await addBook(bookname, writername, bookphoto);
+    res.status(201).json(newBook);
+  } catch (err) {
+    console.error("Error adding book", err);
+    res.status(500).json({ error: "Error adding book" });
   }
 });
 

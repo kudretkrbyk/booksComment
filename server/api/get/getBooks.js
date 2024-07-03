@@ -1,9 +1,7 @@
 const pool = require("../../db/db");
 
 const getBooks = async () => {
-  const query = `
-    SELECT * FROM books;
-  `;
+  const query = "SELECT id, bookname, writername, bookphoto FROM books";
 
   try {
     const res = await pool.query(query);
