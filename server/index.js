@@ -1,44 +1,36 @@
-const { Pool } = require("pg");
+const express = require("express");
+const bodyParser = require("body-parser");
+const { getUsers } = require("./api/get/getUsers");
+const { getBooks } = require("./api/get/getBooks");
 
-const pool = new Pool({
-  user: "postgres",
-  host: "localhost",
-  database: "books",
-  password: "kudret",
-  port: 5432,
+const app = express();
+const port = 3001;
+
+// Middleware
+app.use(bodyParser.json()); // JSON veri işleme için
+
+// Örnek GET endpoint: Tüm kullanıcıları getir
+app.get("/api/users", async (req, res) => {
+  try {
+    const users = await getUsers();
+    res.json(users);
+  } catch (err) {
+    console.error("Error retrieving users", err);
+    res.status(500).json({ error: "Error retrieving users" });
+  }
 });
 
-// JOIN sorgusu ile verileri alma
-const query = `
-  SELECT
-    bw.id,
-    
-    b.Name AS book_name,
-    
-    w.Name AS writer_name
-  FROM
-    bookWriter bw
-  JOIN
-    books b ON bw.book_id = b.id
-  JOIN
-    writer w ON bw.writer_id = w.id;
-`;
-
-pool.query(query, (err, res) => {
-  if (err) {
-    console.error("Error executing query", err.stack);
-  } else {
-    console.log("BookWriter Data with Books and Writers:", res.rows);
+// Örnek GET endpoint: Tüm kitapları getir
+app.get("/api/books", async (req, res) => {
+  try {
+    const books = await getBooks();
+    res.json(books);
+  } catch (err) {
+    console.error("Error retrieving books", err);
+    res.status(500).json({ error: "Error retrieving books" });
   }
-  pool.end();
 });
 
-// bookWriter tablosundaki tüm verileri almak için sorgu
-pool.query("SELECT * FROM users", (err, res) => {
-  if (err) {
-    console.error("Error executing query", err.stack);
-  } else {
-    console.log("bookWriter Table Data:", res.rows);
-  }
-  pool.end();
+app.listen(port, () => {
+  console.log(`Server running on http://localhost:${port}`);
 });
