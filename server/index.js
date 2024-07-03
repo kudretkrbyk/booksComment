@@ -1,29 +1,34 @@
-const mssql = require("mssql");
+const { Pool } = require("pg");
 
-const config = {
-  server: "(LocalDb)/MSSQLLocalDB", // SQL Server sunucu adı
-  port: 1433, // SQL Server bağlantı noktası
-  database: "books", // Bağlanmak istediğiniz veritabanı adı
-  // user ve password parametreleri kaldırıldı
-};
+const pool = new Pool({
+  user: "postgres",
+  host: "localhost",
+  database: "books",
+  password: "kudret",
+  port: 5432,
+});
 
-mssql.connect(config, (err) => {
+// JOIN sorgusu ile verileri alma
+const query = `
+  SELECT
+    bw.id,
+    
+    b.Name AS book_name,
+    
+    w.Name AS writer_name
+  FROM
+    bookWriter bw
+  JOIN
+    books b ON bw.book_id = b.id
+  JOIN
+    writer w ON bw.writer_id = w.id;
+`;
+
+pool.query(query, (err, res) => {
   if (err) {
-    console.error(err);
-    return;
+    console.error("Error executing query", err.stack);
+  } else {
+    console.log("BookWriter Data with Books and Writers:", res.rows);
   }
-
-  console.log("SQL Server bağlantısı kuruldu.");
-
-  // Bağlantı kurulduktan sonra SQL sorgularınızı çalıştırabilirsiniz.
-
-  const request = new mssql.Request();
-  request.query("SELECT * FROM myTable", (err, result) => {
-    if (err) {
-      console.error(err);
-      return;
-    }
-
-    console.log(result);
-  });
+  pool.end();
 });
