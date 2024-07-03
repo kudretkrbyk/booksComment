@@ -1,4 +1,6 @@
-export default function Comments() {
+import React from "react";
+
+export default function FavComments() {
   return (
     <div>
       <div className="card card-compact bg-base-100 w-96 shadow-xl">

@@ -32,3 +32,13 @@ pool.query(query, (err, res) => {
   }
   pool.end();
 });
+
+// bookWriter tablosundaki tüm verileri almak için sorgu
+pool.query("SELECT * FROM users", (err, res) => {
+  if (err) {
+    console.error("Error executing query", err.stack);
+  } else {
+    console.log("bookWriter Table Data:", res.rows);
+  }
+  pool.end();
+});
