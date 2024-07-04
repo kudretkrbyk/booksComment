@@ -3,6 +3,9 @@ import axios from "axios";
 
 export default function Books() {
   const [books, setBooks] = useState([]);
+  const [comment, setComment] = useState("");
+  const [selectedBookId, setSelectedBookId] = useState(null);
+
   useEffect(() => {
     // Kitapları getir
     axios
@@ -14,9 +17,26 @@ export default function Books() {
         console.error("Error fetching books:", error);
       });
   }, []);
-  console.log("bu sayfa books sayfası", books);
+
+  const handleCommentSubmit = async (event, bookId) => {
+    event.preventDefault();
+    try {
+      const userId = 1; // Burada kullanıcı ID'sini dinamik olarak almalısınız, örneğin oturumdan.
+      await axios.post("http://localhost:3001/api/comments", {
+        comment,
+        commentuserid: userId,
+        bookid: bookId,
+      });
+      setComment(""); // Yorum yapıldıktan sonra formu temizle
+      setSelectedBookId(null); // Formu kapat
+      console.log("Yorum eklendi");
+    } catch (error) {
+      console.error("Yorum eklenirken hata:", error);
+    }
+  };
+
   return (
-    <div className="flex flex-col  gap-5">
+    <div className="flex flex-col gap-5">
       {books.map((book) => (
         <div
           key={book.id}
@@ -26,13 +46,13 @@ export default function Books() {
             <img
               className="w-32 h-48 hover:scale-110 duration-700"
               src={book.bookphoto}
-            ></img>
+              alt={book.bookname}
+            />
           </div>
           <div className="flex flex-col items-start justify-center gap-5">
-            {" "}
-            <div className="font-bold text-xl"> {book.bookname} </div>
-            <div> {book.writername} </div>{" "}
-            <div className="flex  items-center justify-center gap-4 text-white">
+            <div className="font-bold text-xl">{book.bookname}</div>
+            <div>{book.writername}</div>
+            <div className="flex items-center justify-center gap-4 text-white">
               <div>
                 <button className="bg-gray-400 p-2 px-4 rounded-2xl">
                   Okuma listesine kaydet
@@ -43,7 +63,34 @@ export default function Books() {
                   Yorumları gör
                 </button>
               </div>
+              <div>
+                <button
+                  className="bg-gray-400 p-2 px-4 rounded-2xl"
+                  onClick={() => setSelectedBookId(book.id)}
+                >
+                  Yorum Yap
+                </button>
+              </div>
             </div>
+            {selectedBookId === book.id && (
+              <form
+                onSubmit={(e) => handleCommentSubmit(e, book.id)}
+                className="mt-4"
+              >
+                <textarea
+                  className="border p-2 w-full"
+                  placeholder="Yorumunuzu yazın"
+                  value={comment}
+                  onChange={(e) => setComment(e.target.value)}
+                ></textarea>
+                <button
+                  type="submit"
+                  className="bg-blue-500 text-white p-2 mt-2 rounded"
+                >
+                  Yorum Yap
+                </button>
+              </form>
+            )}
           </div>
         </div>
       ))}

@@ -1,4 +1,4 @@
-export default function SignIn() {
+export default function Register() {
   return (
     <div>
       <div className="hero bg-base-200 min-h-screen">

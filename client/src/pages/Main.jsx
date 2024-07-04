@@ -5,19 +5,19 @@ import Comments from "./Comments";
 import Users from "./Users";
 import Navbar from "../components/Navbar";
 
-export default function Main() {
+export default function Main({ logOut }) {
   return (
     <div>
       <Navbar />
       <div className="flex items-center justify-around gap-2 p-1 w-full">
         <div className="w-2/12">
-          <LeftNavbar />
+          <LeftNavbar logOut={logOut} />
         </div>
         <div className="w-8/12">
           <Routes>
-            <Route path="books" element={<Books />} />
-            <Route path="comments" element={<Comments />} />
-            <Route path="readers" element={<Users />} />
+            <Route path="/" element={<Books />} />
+            <Route path="/comments" element={<Comments />} />
+            <Route path="/readers" element={<Users />} />
           </Routes>
         </div>
         <div>sdsdsd</div>

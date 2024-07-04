@@ -17,21 +17,21 @@ export default function Users() {
   console.log("users sayfası", users);
 
   return (
-    <div>
+    <div className="w-full flex flex-col items-start justify-start ">
       {users.map((user) => (
-        <div key={user.id} className="hero bg-base-200 ">
-          <div className="hero-content flex-col lg:flex-row">
+        <div key={user.id} className="hero  w-full shadow-2xl">
+          <div className="hero-content flex-col lg:flex-row gap-10 items-center justify-start w-full">
             <img
-              src="https://img.daisyui.com/images/stock/photo-1635805737707-575885ab0820.jpg"
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNZ_Ce93mHKz3Mz9wCQXL_lBkyGVouYRoWqQ&s"
               className="w-32 rounded-full shadow-2xl"
             />
-            <div>
+            <div className=" flex flex-col gap-5">
               <h1 className="text-5xl font-bold">{user.Name} </h1>
-              <p className="py-6">
-                Provident cupiditate voluptatem et in. Quaerat fugiat ut
-                assumenda excepturi exercitationem quasi. In deleniti eaque aut
-                repudiandae et a id nisi.
-              </p>
+              <div className="p-2">
+                <button className="bg-gray-400 rounded-2xl p-2 px-4 text-white">
+                  Yorumlarını gör
+                </button>
+              </div>
             </div>
           </div>
         </div>
