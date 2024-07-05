@@ -9,6 +9,8 @@ const loginUser = require("./api/login/login");
 const { getComments } = require("./api/get/getComments");
 const { addFavBooks } = require("./api/post/addFavBooks");
 const { getFavBooks } = require("./api/get/getFavBooks");
+const { addFavComment } = require("./api/post/addFavComment");
+const { getFavComments } = require("./api/get/getFavComments");
 
 const app = express();
 app.use(cors());
@@ -99,6 +101,32 @@ app.get("/api/favbooks/:userid", async (req, res) => {
     res.status(500).json({ error: "Error fetching favorite books" });
   }
 });
+
+// POST endpoint: Yorumları favorilere ekle
+app.post("/api/favcomments", async (req, res) => {
+  const { commentid, favcommentuserid } = req.body;
+
+  try {
+    const newFavComment = await addFavComment(commentid, favcommentuserid);
+    res.status(201).json(newFavComment);
+  } catch (err) {
+    console.error("Error adding favorite comment", err);
+    res.status(500).json({ error: "Error adding favorite comment" });
+  }
+});
+// GET endpoint: Kullanıcının favori yorumlarını getir
+app.get("/api/favcomments/:userid", async (req, res) => {
+  const { userid } = req.params;
+
+  try {
+    const favComments = await getFavComments(userid);
+    res.json(favComments);
+  } catch (err) {
+    console.error("Error retrieving favorite comments", err);
+    res.status(500).json({ error: "Error retrieving favorite comments" });
+  }
+});
+
 // POST endpoint: Kullanıcı girişi
 app.use("/api/login", loginUser);
 

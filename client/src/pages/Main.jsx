@@ -21,7 +21,10 @@ export default function Main({ logOut, logInUser }) {
           <Routes>
             <Route path="/*" element={<Books />} />
             <Route path="/books" element={<Books logInUser={logInUser} />} />
-            <Route path="/comments" element={<Comments />} />
+            <Route
+              path="/comments"
+              element={<Comments logInUser={logInUser} />}
+            />
             <Route path="/readers" element={<Users />} />
             <Route path="/books/:id" element={<BookDetail />} />
             <Route path="/writer/:writername" element={<WriterDetail />} />
@@ -29,7 +32,10 @@ export default function Main({ logOut, logInUser }) {
               path="/favbooks"
               element={<FavBooks logInUser={logInUser} />}
             />{" "}
-            <Route path="/favcomments" element={<FavComments />} />
+            <Route
+              path="/favcomments"
+              element={<FavComments logInUser={logInUser} />}
+            />
           </Routes>
         </div>
       </div>
