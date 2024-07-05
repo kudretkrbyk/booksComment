@@ -26,7 +26,7 @@ export default function Users() {
               className="w-32 rounded-full shadow-2xl"
             />
             <div className=" flex flex-col gap-5">
-              <h1 className="text-5xl font-bold">{user.Name} </h1>
+              <h1 className="text-5xl font-bold">{user.name} </h1>
               <div className="p-2">
                 <button className="bg-gray-400 rounded-2xl p-2 px-4 text-white">
                   Yorumlarını gör
