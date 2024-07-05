@@ -6,6 +6,7 @@ const { getBooks } = require("./api/get/getBooks");
 const { addBook } = require("./api/post/addBook");
 const { addComment } = require("./api/post/addComment");
 const loginUser = require("./api/login/login");
+const { getComments } = require("./api/get/getComments");
 
 const app = express();
 app.use(cors());
@@ -58,6 +59,16 @@ app.post("/api/comments", async (req, res) => {
   } catch (error) {
     console.error("Error adding comment", error);
     res.status(500).send("Error adding comment");
+  }
+});
+// Yorumları getirme endpoint'i
+app.get("/api/comments", async (req, res) => {
+  try {
+    const comments = await getComments();
+    res.json(comments);
+  } catch (error) {
+    console.error("Error fetching comments:", error);
+    res.status(500).json({ error: "Server error" });
   }
 });
 

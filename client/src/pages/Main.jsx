@@ -5,7 +5,7 @@ import Comments from "./Comments";
 import Users from "./Users";
 import Navbar from "../components/Navbar";
 
-export default function Main({ logOut }) {
+export default function Main({ logOut, logInUser }) {
   return (
     <div>
       <Navbar />
@@ -15,7 +15,8 @@ export default function Main({ logOut }) {
         </div>
         <div className="w-8/12">
           <Routes>
-            <Route path="/" element={<Books />} />
+            <Route path="/*" element={<Books />} />
+            <Route path="/books" element={<Books logInUser={logInUser} />} />
             <Route path="/comments" element={<Comments />} />
             <Route path="/readers" element={<Users />} />
           </Routes>

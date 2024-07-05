@@ -13,6 +13,7 @@ import Login from "./pages/Login";
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [userId, setUserId] = useState(null);
+  const [logInUser, setLogInUser] = useState(null);
 
   const handleLogin = (userId) => {
     setLoggedIn(true);
@@ -32,13 +33,16 @@ function App() {
           path="/*"
           element={
             loggedIn ? (
-              <Main logOut={handleLogout} userId={userId} />
+              <Main logOut={handleLogout} logInUser={logInUser} />
             ) : (
               <Navigate to="/login" />
             )
           }
         />
-        <Route path="/login" element={<Login onLogin={handleLogin} />} />
+        <Route
+          path="/login"
+          element={<Login setLogInUser={setLogInUser} onLogin={handleLogin} />}
+        />
       </Routes>
     </Router>
   );

@@ -2,7 +2,7 @@ const pool = require("../../db/db");
 
 const getUsers = async () => {
   const query = `
-    SELECT * FROM users;
+    SELECT id,name,email FROM users;
   `;
 
   try {

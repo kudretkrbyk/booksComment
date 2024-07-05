@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-function Login({ onLogin }) {
+function Login({ onLogin, setLogInUser }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -15,8 +15,12 @@ function Login({ onLogin }) {
         email,
         password,
       });
+      const { token, user } = response.data;
 
-      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("token", token);
+      console.log("token", token);
+      console.log("user", user);
+      setLogInUser(user);
       onLogin(true);
       navigate("/books");
     } catch (error) {

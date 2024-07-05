@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-export default function Books() {
+export default function Books({ logInUser }) {
   const [books, setBooks] = useState([]);
   const [comment, setComment] = useState("");
   const [selectedBookId, setSelectedBookId] = useState(null);
-
+  console.log("burası books ", logInUser);
   useEffect(() => {
     // Kitapları getir
     axios
@@ -21,7 +21,7 @@ export default function Books() {
   const handleCommentSubmit = async (event, bookId) => {
     event.preventDefault();
     try {
-      const userId = 1; // Burada kullanıcı ID'sini dinamik olarak almalısınız, örneğin oturumdan.
+      const userId = logInUser.id; // Burada kullanıcı ID'sini dinamik olarak almalısınız, örneğin oturumdan.
       await axios.post("http://localhost:3001/api/comments", {
         comment,
         commentuserid: userId,
