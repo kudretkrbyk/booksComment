@@ -7,6 +7,7 @@ import Navbar from "../components/Navbar";
 import BookDetail from "./BookDetail";
 import WriterDetail from "./WriterDetail";
 import FavBooks from "./FavBooks";
+import FavComments from "./FavComments";
 
 export default function Main({ logOut, logInUser }) {
   return (
@@ -27,7 +28,8 @@ export default function Main({ logOut, logInUser }) {
             <Route
               path="/favbooks"
               element={<FavBooks logInUser={logInUser} />}
-            />
+            />{" "}
+            <Route path="/favcomments" element={<FavComments />} />
           </Routes>
         </div>
       </div>

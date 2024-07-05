@@ -17,7 +17,7 @@ export default function Users() {
   console.log("users sayfası", users);
 
   return (
-    <div className="w-full flex flex-col items-start justify-start ">
+    <div className="w-full flex flex-col items-start justify-start p-5">
       {users.map((user) => (
         <div key={user.id} className="hero  w-full shadow-2xl">
           <div className="hero-content flex-col lg:flex-row gap-10 items-center justify-start w-full">

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 export default function Comments() {
   const [comments, setComments] = useState([]);
@@ -19,11 +20,11 @@ export default function Comments() {
   console.log("comments sayfsası", comments);
 
   return (
-    <div className="flex flex-col gap-5 w-full">
+    <div className="z-10 flex flex-col gap-5 w-full p-5">
       {comments.map((comment) => (
         <div
           key={comment.id}
-          className="flex flex-col w-full p-4 items-start gap-10"
+          className="flex flex-col w-full p-4 items-start gap-10 shadow-2xl"
         >
           <div className="flex gap-4 items-end justify-start">
             <div>
@@ -43,9 +44,12 @@ export default function Comments() {
                   </button>
                 </div>
                 <div>
-                  <button className="bg-gray-400 p-2 px-4 rounded-2xl">
-                    Tüm Yorumları Gör
-                  </button>
+                  <Link to={`/books/${comment.bookId}`}>
+                    {" "}
+                    <button className="bg-gray-400 p-2 px-4 rounded-2xl">
+                      Tüm Yorumları gör
+                    </button>
+                  </Link>
                 </div>
               </div>
             </div>
