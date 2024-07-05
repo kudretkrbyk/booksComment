@@ -17,7 +17,8 @@ function Login({ onLogin, setLogInUser }) {
       });
       const { token, user } = response.data;
 
-      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(user));
+
       console.log("token", token);
       console.log("user", user);
       setLogInUser(user);

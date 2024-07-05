@@ -1,34 +1,55 @@
-// App.jsx
+import { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Route,
   Routes,
   Navigate,
 } from "react-router-dom";
-import { useState } from "react";
 import Admin from "./pages/Admin";
 import Main from "./pages/Main";
 import Login from "./pages/Login";
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [userId, setUserId] = useState(null);
-  const [logInUser, setLogInUser] = useState(null);
+  const [loggedIn, setLoggedIn] = useState(null); // Başlangıç değeri null, böylece kontrol edebiliriz.
+  const [logInUser, setLogInUser] = useState(null); // Başlangıç değeri null, boş array yerine.
 
-  const handleLogin = (userId) => {
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+    if (user) {
+      setLogInUser(JSON.parse(user));
+      setLoggedIn(true);
+    } else {
+      setLogInUser(null);
+      setLoggedIn(false);
+    }
+  }, []);
+
+  const handleLogin = (user) => {
     setLoggedIn(true);
-    setUserId(userId);
+    setLogInUser(user);
+    localStorage.setItem("user", JSON.stringify(user)); // Giriş yapıldığında kullanıcı bilgisini localStorage'a kaydedin.
   };
 
   const handleLogout = () => {
     setLoggedIn(false);
-    setUserId(null);
+    setLogInUser(null);
+    localStorage.removeItem("user");
   };
+
+  // Kullanıcı bilgisi kontrol ediliyorsa yükleme ekranı gösterebilirsiniz.
+  if (loggedIn === null) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <Router>
       <Routes>
-        <Route path="/admin" element={<Admin />} />
+        <Route
+          path="/admin"
+          element={
+            logInUser?.admincontrol ? <Admin /> : <div>Yetki hatası</div>
+          }
+        />
         <Route
           path="/*"
           element={

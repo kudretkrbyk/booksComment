@@ -8,7 +8,7 @@ router.post("/", async (req, res) => {
   const { email, password } = req.body;
 
   const query = `
-    SELECT id, password, name FROM users WHERE email = $1
+    SELECT id, password, name, admincontrol FROM users WHERE email = $1
   `;
 
   try {
@@ -20,12 +20,19 @@ router.post("/", async (req, res) => {
 
     const user = result.rows[0];
     const token = jwt.sign(
-      { id: user.id, email: user.email },
+      { id: user.id, email: user.email, admincontrol: user.admincontrol },
       config.jwt.secret,
       { expiresIn: "1h" }
     );
 
-    res.json({ token, user: { id: user.id, name: user.name, email } });
+    res.json({
+      token,
+      user: {
+        id: user.id,
+        name: user.name,
+        admincontrol: user.admincontrol,
+      },
+    });
   } catch (error) {
     console.error("Login error:", error.stack);
     res.status(500).json({ error: "Server error" });

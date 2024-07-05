@@ -11,7 +11,7 @@ export default function Main({ logOut, logInUser }) {
   return (
     <div>
       <Navbar />
-      <div className="flex items-center justify-around gap-2 p-1 w-full">
+      <div className="flex items-center justify-around gap-2 p-10 w-full">
         <div className="w-2/12">
           <LeftNavbar logOut={logOut} />
         </div>
@@ -25,7 +25,6 @@ export default function Main({ logOut, logInUser }) {
             <Route path="/writer/:writername" element={<WriterDetail />} />
           </Routes>
         </div>
-        <div>sdsdsd</div>
       </div>
     </div>
   );
