@@ -37,8 +37,10 @@ export default function BookDetail() {
             />
           </div>
           <div className="flex flex-col gap-1">
-            <div className="font-bold text-xl">{book.bookname}</div>
-            <div>{book.writername}</div>
+            <div className="font-bold text-xl text-transform: uppercase">
+              {book.bookname}
+            </div>
+            <div className="text-transform: uppercase">{book.writername}</div>
             <div className="flex gap-10 items-end justify-center">
               <div>
                 <button className="bg-gray-400 p-2 px-4 rounded-2xl">

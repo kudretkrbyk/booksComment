@@ -35,7 +35,7 @@ export default function Books({ logInUser }) {
       console.error("Yorum eklenirken hata:", error);
     }
   };
-
+  console.log(books);
   return (
     <div className="flex flex-col gap-5">
       {books.map((book) => (
@@ -52,7 +52,10 @@ export default function Books({ logInUser }) {
           </div>
           <div className="flex flex-col items-start justify-center gap-5">
             <div className="font-bold text-xl">{book.bookname}</div>
-            <div>{book.writername}</div>
+            <Link to={`/writer/${book.writername}`}>
+              {" "}
+              <div>{book.writername}</div>{" "}
+            </Link>{" "}
             <div className="flex items-center justify-center gap-4 text-white">
               <div>
                 <button className="bg-gray-400 p-2 px-4 rounded-2xl">
