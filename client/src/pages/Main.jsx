@@ -4,6 +4,7 @@ import Books from "./Books";
 import Comments from "./Comments";
 import Users from "./Users";
 import Navbar from "../components/Navbar";
+import BookDetail from "./BookDetail";
 
 export default function Main({ logOut, logInUser }) {
   return (
@@ -19,6 +20,7 @@ export default function Main({ logOut, logInUser }) {
             <Route path="/books" element={<Books logInUser={logInUser} />} />
             <Route path="/comments" element={<Comments />} />
             <Route path="/readers" element={<Users />} />
+            <Route path="/books/:id" element={<BookDetail />} />
           </Routes>
         </div>
         <div>sdsdsd</div>

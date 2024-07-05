@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 export default function Books({ logInUser }) {
   const [books, setBooks] = useState([]);
@@ -59,9 +60,12 @@ export default function Books({ logInUser }) {
                 </button>
               </div>
               <div>
-                <button className="bg-gray-400 p-2 px-4 rounded-2xl">
-                  Yorumları gör
-                </button>
+                <Link to={`/books/${book.id}`}>
+                  {" "}
+                  <button className="bg-gray-400 p-2 px-4 rounded-2xl">
+                    Yorumları gör
+                  </button>
+                </Link>
               </div>
               <div>
                 <button

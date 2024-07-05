@@ -4,6 +4,7 @@ const getComments = async () => {
   const query = `
     SELECT 
       books.id AS bookId,
+      books.id,
       books.bookname,
       books.bookphoto,
       books.writername,
@@ -17,7 +18,7 @@ const getComments = async () => {
   try {
     const res = await pool.query(query);
     return res.rows.map((row) => ({
-      bookId: row.bookId,
+      bookId: row.bookid,
       bookname: row.bookname,
       writername: row.writername,
       bookphoto: row.bookphoto,
