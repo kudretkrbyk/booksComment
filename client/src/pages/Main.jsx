@@ -6,6 +6,7 @@ import Users from "./Users";
 import Navbar from "../components/Navbar";
 import BookDetail from "./BookDetail";
 import WriterDetail from "./WriterDetail";
+import FavBooks from "./FavBooks";
 
 export default function Main({ logOut, logInUser }) {
   return (
@@ -13,7 +14,7 @@ export default function Main({ logOut, logInUser }) {
       <Navbar />
       <div className="flex items-center justify-around gap-2 p-10 w-full">
         <div className="w-2/12">
-          <LeftNavbar logOut={logOut} />
+          <LeftNavbar logOut={logOut} logInUser={logInUser} />
         </div>
         <div className="w-8/12">
           <Routes>
@@ -23,6 +24,10 @@ export default function Main({ logOut, logInUser }) {
             <Route path="/readers" element={<Users />} />
             <Route path="/books/:id" element={<BookDetail />} />
             <Route path="/writer/:writername" element={<WriterDetail />} />
+            <Route
+              path="/favbooks"
+              element={<FavBooks logInUser={logInUser} />}
+            />
           </Routes>
         </div>
       </div>

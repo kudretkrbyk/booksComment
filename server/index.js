@@ -7,6 +7,8 @@ const { addBook } = require("./api/post/addBook");
 const { addComment } = require("./api/post/addComment");
 const loginUser = require("./api/login/login");
 const { getComments } = require("./api/get/getComments");
+const { addFavBooks } = require("./api/post/addFavBooks");
+const { getFavBooks } = require("./api/get/getFavBooks");
 
 const app = express();
 app.use(cors());
@@ -72,6 +74,31 @@ app.get("/api/comments", async (req, res) => {
   }
 });
 
+// POST endpoint: Favori kitap ekleme
+app.post("/api/favbooks", async (req, res) => {
+  const { bookid, favuserid } = req.body;
+
+  try {
+    const newFavBook = await addFavBooks(bookid, favuserid);
+    res.status(201).json(newFavBook);
+  } catch (err) {
+    console.error("Error adding favorite book", err);
+    res.status(500).json({ error: "Error adding favorite book" });
+  }
+});
+
+// GET endpoint: Kullanıcının favori kitaplarını getir
+app.get("/api/favbooks/:userid", async (req, res) => {
+  const { userid } = req.params;
+
+  try {
+    const favBooks = await getFavBooks(userid);
+    res.json(favBooks);
+  } catch (err) {
+    console.error("Error fetching favorite books", err);
+    res.status(500).json({ error: "Error fetching favorite books" });
+  }
+});
 // POST endpoint: Kullanıcı girişi
 app.use("/api/login", loginUser);
 

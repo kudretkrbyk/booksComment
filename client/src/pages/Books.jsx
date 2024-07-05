@@ -7,6 +7,7 @@ export default function Books({ logInUser }) {
   const [comment, setComment] = useState("");
   const [selectedBookId, setSelectedBookId] = useState(null);
   console.log("burası books ", logInUser);
+
   useEffect(() => {
     // Kitapları getir
     axios
@@ -35,7 +36,20 @@ export default function Books({ logInUser }) {
       console.error("Yorum eklenirken hata:", error);
     }
   };
-  console.log(books);
+
+  const handleAddToFavorites = async (bookId) => {
+    try {
+      const userId = logInUser.id;
+      await axios.post("http://localhost:3001/api/favbooks", {
+        bookid: bookId,
+        favuserid: userId,
+      });
+      console.log("Kitap favorilere eklendi");
+    } catch (error) {
+      console.error("Favorilere eklenirken hata:", error);
+    }
+  };
+
   return (
     <div className="flex flex-col gap-5">
       {books.map((book) => (
@@ -58,7 +72,10 @@ export default function Books({ logInUser }) {
             </Link>{" "}
             <div className="flex items-center justify-center gap-4 text-white">
               <div>
-                <button className="bg-gray-400 p-2 px-4 rounded-2xl">
+                <button
+                  className="bg-gray-400 p-2 px-4 rounded-2xl"
+                  onClick={() => handleAddToFavorites(book.id)}
+                >
                   Okuma listesine kaydet
                 </button>
               </div>
